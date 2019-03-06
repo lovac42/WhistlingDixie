@@ -69,7 +69,7 @@ class Dixie():
                     showWarning("Can't modifiy phantom card!")
 
                 #prevent other addons from modding original card
-                self.card=copy.deepcopy(card)
+                self.card=copy.copy(card)
 
                 #prevent mods to phantom card
                 self.card.id=self.lastId=intTime(1000)
