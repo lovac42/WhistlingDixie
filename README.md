@@ -27,8 +27,15 @@ Due to unknown future compatibility issues, this addon must be manually enabled 
 
 
 ## Compatibility Issues:
-The phantom card is a copy of the failed review card. As such, it does not exist in the database. But during review, it is treated just the same and triggers the same signals for other addons. However, for addons that automatically edits this phantom card, they will throw an error. As there are many addons out there, new and old, it is hard to tell which ones will be affected. For that reason, it is the users' responsibility to backup the database and ensure all addons are compatible.
+The phantom card is a copy of the failed review card. As such, it does not exist in the database. But during review, it is treated just the same and triggers the same signals for other addons. However, for addons that automatically edits or reads from this phantom card, they will throw an error. As there are many addons out there, new and old, it is hard to tell which ones will be affected. For that reason, it is the users' responsibility to backup the database and ensure all addons are compatible.
 
 ### Anki Fanfare:
 This addon works well with Fanfare, but the load order of the addon matter. If Fanfare was loaded first on startup, then this addon cannot trigger the themes to play. Renaming the addon files will cause this addon to be loaded first when anki starts up. On Windows, on the same machine, C drive and D drive will use different load orders, so the prefix used seems to be system/path dependent. Whatever the case, you may need to play around a bit to get things working.
+
+### Warrior Mode:
+Requires changing the line with ```...getNote(card.nid)...``` to ```tags=card.note().stringTags()```, simple search and replace.
+
+
+
+
 

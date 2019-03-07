@@ -66,13 +66,18 @@ class Dixie():
              card.queue in self.conf.get('do_queue',(2,3))):
 
                 def nullFn():
-                    showWarning("Can't modifiy phantom card!")
+                    showWarning("Something tried to modifiy the phantom card!")
 
-                #prevent other addons from modding original card
+                #make copy of card and note
                 self.card=copy.copy(card)
+                self.card.id=self.lastId=intTime(1000)
+                note=self.card._note=copy.copy(card.note())
+                self.card.nid=self.card._note.id=intTime(1000)+1
 
                 #prevent mods to phantom card
-                self.card.id=self.lastId=intTime(1000)
                 self.card.flush=nullFn
                 self.card.flushSched=nullFn
+                note._postFlush=nullFn
+                note._preFlush=nullFn
+                note.flush=nullFn
 

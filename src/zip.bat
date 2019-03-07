@@ -5,9 +5,9 @@ set REPO=whistling_dixie
 fsum -r -jm -md5 -d%REPO% * > checksum.md5
 move checksum.md5 %REPO%/checksum.md5
 
-quick_manifest.exe "Whistling Dixie: Redo Failed Cards" "whistling_dixie" >%REPO%/manifest.json
+quick_manifest.exe "Whistling Dixie: Redo Failed Cards" "%REPO%" >%REPO%/manifest.json
 
-%ZIP% %REPO%_20.zip *.py %REPO%/*.*
+%ZIP% %REPO%_20.zip *.py %REPO%/*
 
 cd %REPO%
-%ZIP% ../%REPO%_21.ankiaddon *.*
+%ZIP% ../%REPO%_21.ankiaddon *
