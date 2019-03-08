@@ -16,24 +16,23 @@ dixie=Dixie()
 
 
 def wrap_nextCard(reviewer, _old):
-    if dixie.card:
-        reviewer.cardQueue.append(dixie.card)
-        dixie.card=None
+    card=dixie.next()
+    if card:
+        reviewer.cardQueue.append(card)
     return _old(reviewer)
 
 
 def wrap_answerCard(reviewer, ease, _old):
     if reviewer.mw.state != "review": return
     if reviewer.state != "answer": return
-    if reviewer.card.id==dixie.lastId:
-        return reviewer.nextCard()
-    dixie.whistle(reviewer.card,ease)
+    if dixie.whistle(reviewer.card, ease):
+        return reviewer.nextCard() #used to prevent grading card
     return _old(reviewer,ease)
 
 
 #This could not be wrapped separately due to conflict with other addons.
 def wrap_rev_answerButtons(reviewer, _old):
-    if reviewer.card.id!=dixie.lastId:
+    if not dixie.hasNext(reviewer.card):
         return _old(reviewer)
     buf = """<center><table cellpading=0 cellspacing=0><tr>
 <td align=center>%s<button %s title="%s" onclick='py.link("ease%d");'>
@@ -52,7 +51,7 @@ Reviewer._answerButtons = wrap(Reviewer._answerButtons, wrap_rev_answerButtons, 
 # HOTKEY Setup ============================
 
 def wrap_sched_answerButtons(sched, card, _old):
-    if card.id==dixie.lastId:
+    if dixie.hasNext(card):
         return 4 #Allows pressing hotkey4 on lrn cards
     return _old(sched, card)
 
