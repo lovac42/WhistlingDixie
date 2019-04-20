@@ -22,6 +22,13 @@ As a child, I often avoid steping on cracks on the sidewalk. Lately, I've develo
 In this addon, for every failed review, we force a repeat. This is a sort of studied carelessness where every failure is repeated and redone properly. The phantom review will not be counted or logged, but it will neutralize the negativity received from the previous attempt.
 
 
+
+## Usage Scenario no.3:
+When writing kanji characters, it is sometimes necessary to flip the card over and practice without the lure of the answer. Any grade button other than 4 applied to a phatom card will flip it over. This allows unlimited practices.  
+<img src="https://github.com/lovac42/WhistlingDixie/blob/master/screenshots/kanji.jpg?raw=true">
+
+
+
 ## Config:
 Due to unknown future compatibility issues, this addon must be manually enabled in the "Study" menu.
 

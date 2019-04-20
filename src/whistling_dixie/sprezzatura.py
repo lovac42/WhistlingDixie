@@ -18,7 +18,9 @@ from .const import *
 class Dixie():
     loaded=None
     card=None
+    lastEase=4
     lastId=0
+    cnt=1
 
 
     def __init__(self):
@@ -59,12 +61,16 @@ class Dixie():
 
 
     def whistle(self, card, ease):
+        self.lastEase=ease
+        if self.card: return True #repeat cnt
+
         FG=self.conf.get('failed_grade',1)
-        if self.state.isChecked() and ease<=FG:
+        if self.state.isChecked() and self.lastEase<=FG:
             if self.conf.get('do_all_cards',False) or \
             (card.type in self.conf.get('do_type',(0,1,2,3)) and \
              card.queue in self.conf.get('do_queue',(2,3))):
 
+                self.cnt=self.conf.get('repeat_count',1)
                 def nullFn():
                     showWarning("Something tried to modifiy the phantom card!")
 
@@ -80,4 +86,16 @@ class Dixie():
                 note._postFlush=nullFn
                 note._preFlush=nullFn
                 note.flush=nullFn
+
+
+    def hasNext(self, card):
+        if card.id==self.lastId:
+            return True
+
+
+    def next(self):
+        if self.lastEase==4 and self.cnt<1:
+            self.card=None
+        self.cnt-=1
+        return self.card
 
