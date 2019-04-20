@@ -8,6 +8,7 @@ from aqt import mw
 from aqt.qt import *
 from aqt.reviewer import Reviewer
 from anki.hooks import wrap
+# from anki.lang import _
 from .const import *
 from .sprezzatura import *
 
@@ -34,12 +35,15 @@ def wrap_answerCard(reviewer, ease, _old):
 def wrap_rev_answerButtons(reviewer, _old):
     if not dixie.hasNext(reviewer.card):
         return _old(reviewer)
+
+    CMD='pycmd' if ANKI21 else 'py.link'
     buf = """<center><table cellpading=0 cellspacing=0><tr>
-<td align=center>%s<button %s title="%s" onclick='py.link("ease%d");'>
-%s</button></td></tr></table>"""%(
-    'That Was EZ!<br>', "id=defease", _("Shortcut key: %s") % 4, 4, "EZ")
+<td align=center>%s<button id=defease title="Shortcut key: %d" 
+onclick='%s("ease%d");'>%s</button></td></tr></table>"""%(
+        'That Was EZ!<br>', 4, CMD, 4, "EZ")
     script = """<script>$(function () { $("#defease").focus(); });</script>"""
     return buf + script
+
 
 
 Reviewer.nextCard = wrap(Reviewer.nextCard, wrap_nextCard, 'around')
